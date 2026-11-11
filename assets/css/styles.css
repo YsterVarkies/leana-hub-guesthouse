@@ -45,7 +45,7 @@
 
 /* ---------- base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--nav-h); overflow-x: hidden; overscroll-behavior-x: none; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   margin: 0;
@@ -59,6 +59,9 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
+/* only the room and garden rows scroll sideways; the page itself never pans */
+main, .foot { touch-action: pan-y pinch-zoom; }
+.rooms__list, .garden__photos { touch-action: pan-x pan-y pinch-zoom; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
@@ -163,7 +166,7 @@ html.motion .hero__keys { pointer-events: auto; }
   opacity: 0; transition: opacity var(--t-hover) ease;
 }
 .keytip.is-on { opacity: 1; }
-@media (hover: none) { .keytip { display: none; } }
+@media (hover: none), (pointer: coarse) { .keytip { display: none; } }
 .hero__title {
   position: absolute; z-index: 4; left: var(--m); bottom: 30%;
   font-family: var(--display); font-weight: 800; text-transform: uppercase;
@@ -175,7 +178,7 @@ html.motion .hero__keys { pointer-events: auto; }
   display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; max-width: 760px;
 }
 .hero__lede { flex: 1 0 100%; max-width: 30ch; font-size: var(--step-body); }
-.hero__call { font-size: var(--step-small); }
+.hero__call { font-size: var(--step-small); display: inline-block; margin-top: 10px; padding: 6px 0; }
 .hero__caption { display: none; }
 
 /* with motion: the arch on walnut, the picture opens as you scroll (GSAP drives --open) */
@@ -287,8 +290,9 @@ html.motion .hero__caption {
 .frame__card {
   position: absolute; top: 50%; translate: 0 -50%;
   width: var(--c4); min-height: 52svh;
-  display: flex; flex-direction: column; gap: 14px;
-  padding: 26px 24px 24px; background: var(--ink); color: var(--bg);
+  display: flex; flex-direction: column; gap: 16px;
+  max-height: calc(100svh - 2 * var(--nav-h)); overflow: hidden;
+  padding: 36px 36px 36px; background: var(--ink); color: var(--bg);
 }
 .frame__card--1 { left: calc(var(--m) + var(--c4) + var(--gap)); }
 .frame__card--2 { left: calc(var(--m) + 2 * (var(--c4) + var(--gap))); }
@@ -298,7 +302,8 @@ html.motion .hero__caption {
 }
 .frame__variant { font-size: var(--step-body); }
 .frame__fact { font-size: var(--step-body); color: #4f4434; }
-.frame__whole { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; margin-top: auto; }
+.frame__whole { width: 100%; aspect-ratio: 3 / 2; max-height: 22svh; object-fit: cover; margin-top: auto; flex-shrink: 1; min-height: 80px; }
+.frame__card .btn { flex: none; margin-top: 8px; }
 .frame .btn:hover { background: var(--bg); color: var(--ink); }
 
 @media (max-width: 900px) {

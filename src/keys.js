@@ -214,12 +214,12 @@ function init() {
   const tip = document.createElement('div');
   tip.className = 'keytip';
   tip.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(tip);
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) document.body.appendChild(tip);
 
   canvas.addEventListener('pointermove', (e) => {
     const r = canvas.getBoundingClientRect();
     ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -(((e.clientY - r.top) / r.height) * 2 - 1));
-    tip.style.transform = `translate(${e.clientX + 16}px, ${e.clientY + 16}px)`;
+    tip.style.transform = `translate(${Math.min(e.clientX + 16, window.innerWidth - 220)}px, ${e.clientY + 16}px)`;
   }, { passive: true });
   canvas.addEventListener('pointerleave', () => { ndc.set(-5, -5); });
   window.addEventListener('pointermove', (e) => {
