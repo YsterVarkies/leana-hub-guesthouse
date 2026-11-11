@@ -1,0 +1,16 @@
+{
+  "name": "leana-hub-guesthouse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for Leana Hub Guest House, Potchefstroom",
+  "scripts": {
+    "build": "esbuild src/keys.js --bundle --minify --format=iife --target=es2019 --outfile=assets/js/keys.js",
+    "vendor": "node -e \"const fs=require('fs');for(const f of ['gsap.min.js','ScrollTrigger.min.js','Flip.min.js'])fs.copyFileSync('node_modules/gsap/dist/'+f,'assets/vendor/'+f)\"",
+    "serve": "node tools/serve.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "gsap": "^3.15.1",
+    "three": "^0.187.0"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "leana-hub", "runtimeExecutable": "node", "runtimeArgs": ["tools/serve.mjs", "4173"], "port": 4173 }
+  ]
+}
